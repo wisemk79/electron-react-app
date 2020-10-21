@@ -12,16 +12,59 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build": "yarn react-build && electron-builder",
+    "build:osx": "yarn react-build && electron-builder --mac",
+    "build:linux": "npm run build:linux32 && npm run build:linux64",
+    "build:linux32": "yarn react-build && electron-builder --linux --ia32",
+    "build:linux64": "yarn react-build && electron-builder --linux --x64",
+    "build:win": "npm run build:win32 && npm run build:win64",
+    "build:win32": "yarn react-build && electron-builder --win --ia32",
+    "build:win64": "yarn react-build && electron-builder --win --x64",
     "release": "yarn react-build && electron-builder --publish=always"
   },
   "build": {
     "appId": "your.id",
     "mac": {
-      "category": "your.app.category.type"
+      "category": "your.app.category.type",
+      "icon": "./favicon.ico"
     },
     "extraMetadata": {
       "main": "build/electron.js"
-    }
+    },
+    "dmg": { 
+      "title": "tournant",
+      "icon": "./favicon.ico"
+  },
+ "win": { 
+     "target": [
+           "zip",
+           "nsis"
+      ],
+      "icon": "./favicon.ico"
+ },
+ "linux": { 
+      "target": [
+            "AppImage",
+            "deb",
+            "rpm",
+            "zip",
+            "tar.gz"
+      ],
+      "icon": "./favicon.ico"
+ },
+ "nsis": {
+      "oneClick": false, 
+      "allowToChangeInstallationDirectory": false, 
+      "installerLanguages": [
+           "en_US",
+           "ko_KR"
+      ],
+      "language": "1042"
+ },
+ "directories": {
+      "buildResources": "resources/installer/",
+      "output": "dist/",
+      "app": "."
+ }
   },
   "keywords": [],
   "author": "",
